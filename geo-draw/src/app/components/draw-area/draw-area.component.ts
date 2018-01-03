@@ -6,11 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./draw-area.component.scss']
 })
 export class DrawAreaComponent implements OnInit {
-
   public coordinates = []
   public showMaxItems: boolean = false
 
-  public getPosition(e) {
+  public getPosition(e: any) {
     let cursorX: number;
     let cursorY: number;
     let that = this;
@@ -19,12 +18,14 @@ export class DrawAreaComponent implements OnInit {
         that.coordinates.push({x: e.pageX, y: e.pageY})
       }
     } else {
+      e.stopPropagation();
       this.showMaxItems = true;
     }
   }
 
-  resetPoints() {
+  resetPoints(e: any) {
     this.coordinates = [];
+    e.stopPropagation();
     this.showMaxItems = false;
   }
 
