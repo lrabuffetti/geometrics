@@ -1,0 +1,11 @@
+<div class="col-md-6 mt-2 clearfix">
+  <h1 class="float-left">
+    draw area
+  </h1>
+  <button type="button" class="btn btn-primary float-right" (click)="reset()" name="button">Reset</button>
+</div>
+<div class="draw-area" (click)="getPosition(e)">
+  <div class="some-point" *ngFor="let item of coordinates; let i = index">
+    {{item | json}}
+  </div>
+</div>
