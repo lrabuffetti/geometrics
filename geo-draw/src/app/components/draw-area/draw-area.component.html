@@ -5,7 +5,5 @@
   <button type="button" class="btn btn-primary float-right" (click)="resetPoints($event)" name="button">Reset</button>
 </div>
 <div class="draw-area" (click)="getPosition($event)">
-  <div class="some-point" *ngFor="let item of coordinates; let i = index">
-    {{item | json}}
-  </div>
+  <app-point class="some-point" *ngFor="let item of coordinates; let i = index" [ngStyle]="pointPosition(item)"></app-point>
 </div>

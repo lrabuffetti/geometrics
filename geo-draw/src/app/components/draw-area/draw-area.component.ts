@@ -23,10 +23,19 @@ export class DrawAreaComponent implements OnInit {
     }
   }
 
-  resetPoints(e: any) {
+  public resetPoints(e: any) {
     this.coordinates = [];
     e.stopPropagation();
     this.showMaxItems = false;
+  }
+
+  public pointPosition(item) {
+    let style = {
+      'top': item.y + 'px',
+      'left': item.x + 'px'
+    }
+
+    return style;
   }
 
   constructor() { }
