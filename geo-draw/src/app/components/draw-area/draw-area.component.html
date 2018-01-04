@@ -1,9 +1,10 @@
-<div class="col-md-6 mt-2 clearfix">
+<div class="col-md-12 mt-2 clearfix">
   <h1 class="float-left">
     draw area
   </h1>
   <button type="button" class="btn btn-primary float-right" (click)="resetPoints($event)" name="button">Reset</button>
 </div>
 <div class="draw-area" (click)="getPosition($event)">
-  <app-point class="some-point" *ngFor="let item of coordinates; let i = index" [ngStyle]="pointPosition(item)"></app-point>
+  <app-point class="some-point" *ngFor="let item of coordinates; let i = index" [ngStyle]="pointPosition(item)" [lines]="lines" [coordinates]="coordinates"></app-point>
+  <!-- <div *ngFor="let line of lines; let idx of index" class="" [ngStyle]="line.styles" id="{{line.id}}"></div> -->
 </div>

@@ -7,24 +7,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DrawAreaComponent implements OnInit {
   public coordinates = []
+  public lines = []
   public showMaxItems: boolean = false
 
   public getPosition(e: any) {
     let cursorX: number;
     let cursorY: number;
     let that = this;
-    if(this.coordinates.length < 3) {
+
+    if (this.coordinates.length < 3) {
       document.onclick = function(e) {
-        that.coordinates.push({x: e.pageX, y: e.pageY})
+        that.coordinates.push({ x: e.pageX, y: e.pageY })
       }
     } else {
       e.stopPropagation();
       this.showMaxItems = true;
     }
+
   }
 
   public resetPoints(e: any) {
     this.coordinates = [];
+    this.lines = [];
     e.stopPropagation();
     this.showMaxItems = false;
   }
