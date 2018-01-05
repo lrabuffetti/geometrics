@@ -13,6 +13,12 @@ export class PointComponent implements OnInit {
   @Output('update') newCoordinate = new EventEmitter<any>();
   private lastPointDistance: any;
 
+  /**
+   * Print the lines between each point the browser
+   * @param  {any}    pointA [pair of points]
+   * @param  {any}    pointB [pair of points]
+   * @return {[lines]}        [updated array with the lines to be written]
+   */
   private drawLine(pointA: any, pointB: any) {
     let x1 = pointA.x;
     let y1 = pointA.y;
@@ -28,9 +34,9 @@ export class PointComponent implements OnInit {
     } else {
       transform = 180 + angle;
     }
-
+    // id for the line
     let id = 'line-' + new Date().getTime();
-
+    // css styles to draw the line with HTML
     let styles = {
       'left': x2 + 'px',
       'top': y2 + 'px',
@@ -48,45 +54,42 @@ export class PointComponent implements OnInit {
       'height': '1px',
       'background-color': '#000',
     }
-
+    // set the line object
     let line = {
       'id': id,
       'styles': styles
     }
-
+    //add the line to the array
     this.lines.push(line);
   }
 
-  public lastPoint(point, line) {
-    console.log('point:', point, 'line:', line);
-    this.coordinates.push(
-      {
-        x: point.x + parseInt(line.styles.left.substring(0, line.styles.left.length - 2), 0),
-        y: point.y + parseInt(line.styles.top.substring(0, line.styles.top.length - 2), 0)
-      }
-    )
-    // let point2 = {
-    //   x: parseInt(line.styles.left.substring(0, line.styles.left.length - 2), 0) - point.x,
-    //   y: parseInt(line.styles.top.substring(0, line.styles.top.length - 2), 0) - point.y
-    // }
-    // this.drawLine(point, point2);
-    this.newCoordinate.emit(this.coordinates)
+  public lastPoint() {
+    console.log(this.coordinates);
+    // Formula of parallelogram to understand the logic
+    // Since PS→=QR→, you'll have
+    // (Sx−Px,Sy−Py)=(Rx−Qx,Ry−Qy) ⇒
+    // (x−(−2),y−4)=(3−1,3−(−2)) ⇒
+    // x−(−2)=3−1 and y−4=3−(−2)⇒S(0,9).
+    // this.newCoordinate.emit(this.coordinates)
   }
 
   constructor() { }
 
   ngOnInit() {
+    //delete repeated lines
     this.lines = _.uniqBy(this.lines, function(e: any) { return e.id; });
     if (this.coordinates.length >= 1) {
       for (let i = 0; i < this.coordinates.length; i++) {
         if (i >= 1) {
+          //create the lines based on the points selected by the user
           this.drawLine(this.coordinates[i - 1], this.coordinates[i]);
         }
       }
     }
-
+    // as the user only select 3 point, to graph a parallelogram we need to
+    // calculate the last point in order to complete the graph
     if (this.coordinates.length === 3) {
-      this.lastPoint(_.head(this.coordinates), _.last(this.lines));
+      this.lastPoint();
     }
   }
 
