@@ -70,6 +70,10 @@ export class PointComponent implements OnInit {
     // (Sx−Px,Sy−Py)=(Rx−Qx,Ry−Qy) ⇒
     // (x−(−2),y−4)=(3−1,3−(−2)) ⇒
     // x−(−2)=3−1 and y−4=3−(−2)⇒S(0,9).
+    let P = this.coordinates[0];
+    let Q = this.coordinates[1];
+    let R = this.coordinates[2];
+    let S = {}
     // this.newCoordinate.emit(this.coordinates)
   }
 
