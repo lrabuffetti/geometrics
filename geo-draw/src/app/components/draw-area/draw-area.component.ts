@@ -42,6 +42,11 @@ export class DrawAreaComponent implements OnInit {
     return style;
   }
 
+  public newCoordinate(event) {
+    console.log(event);
+    this.coordinates = event;
+  }
+
   constructor() { }
 
   ngOnInit() {
