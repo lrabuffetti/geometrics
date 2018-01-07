@@ -9,8 +9,6 @@
     class="some-point"
     *ngFor="let item of coordinates; let i = index"
     [ngStyle]="pointPosition(item)"
-    (update)="newCoordinate($event)"
-    [lines]="lines"
     [coordinates]="coordinates"></app-point>
   <!-- <div *ngFor="let line of lines; let idx of index" class="" [ngStyle]="line.styles" id="{{line.id}}"></div> -->
 </div>

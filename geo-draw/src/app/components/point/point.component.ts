@@ -11,7 +11,6 @@ export class PointComponent implements OnInit {
   @Input() lines: any;
   @Input() coordinates: any;
   @Output('update') newCoordinate = new EventEmitter<any>();
-  private lastPointDistance: any;
 
   private drawLine(pointA: any, pointB: any) {
     let x1 = pointA.x;
@@ -54,39 +53,50 @@ export class PointComponent implements OnInit {
       'styles': styles
     }
 
+    console.log(this.lines, 'lines');
     this.lines.push(line);
   }
 
-  public lastPoint(point, line) {
-    console.log('point:', point, 'line:', line);
-    this.coordinates.push(
-      {
-        x: point.x + parseInt(line.styles.left.substring(0, line.styles.left.length - 2), 0),
-        y: point.y + parseInt(line.styles.top.substring(0, line.styles.top.length - 2), 0)
-      }
-    )
-    // let point2 = {
-    //   x: parseInt(line.styles.left.substring(0, line.styles.left.length - 2), 0) - point.x,
-    //   y: parseInt(line.styles.top.substring(0, line.styles.top.length - 2), 0) - point.y
-    // }
-    // this.drawLine(point, point2);
-    this.newCoordinate.emit(this.coordinates)
+  public lastPoint() {
+    console.log(this.coordinates, 'lastPoint');
+    /**
+     * We need to find the 4th point to close the parallellogram
+     * so, we need to find that 4th coordinate and here is a simple
+     * formula of how to do it, let's translate it to JS
+     *
+     * A(−2;4) , B(1;−2) and C(3;3) and D(x;y)
+     * Since AD → = BD → AD → = BD →, you'll have
+     * (Dx − Ax , Dy − Ay) = (Cx − Bx, Cy − By)
+     * (Dx − Ax , Dy − Ay) = (Cx − Bx, Cy − By)
+     * ⇒ (x − ( −2 ), y − 4) = (3 − 1, 3 − ( −2 ))
+     * ⇒ (x − ( −2 ) , y − 4) = (3 − 1, 3 − ( −2 ))
+     * ⇒ x − ( −2 ) = 3 − 1 and y − 4 = 3 − (−2) ⇒ S(0,9).
+     */
+    let A = this.coordinates[0];
+    let B = this.coordinates[1];
+    let C = this.coordinates[2];
+    let D = {
+      x: (C.x + A.x) - B.x,
+      y: (C.y + A.y) - B.y
+     };
+    this.coordinates.push(D);
+    //this.newCoordinate.emit(this.coordinates)
   }
 
   constructor() { }
 
   ngOnInit() {
     this.lines = _.uniqBy(this.lines, function(e: any) { return e.id; });
-    if (this.coordinates.length >= 1) {
+    if (this.coordinates.length >= 1 || this.coordinates.length < 3) {
       for (let i = 0; i < this.coordinates.length; i++) {
         if (i >= 1) {
           this.drawLine(this.coordinates[i - 1], this.coordinates[i]);
         }
       }
     }
-
     if (this.coordinates.length === 3) {
-      this.lastPoint(_.head(this.coordinates), _.last(this.lines));
+      this.lastPoint();
+      this.drawLine(this.coordinates[2], this.coordinates[3]);
     }
   }
 
