@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck, OnChanges } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-draw-area',
@@ -6,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./draw-area.component.scss']
 })
 export class DrawAreaComponent implements OnInit {
-  public coordinates = []
-  public lines = []
-  public showMaxItems: boolean = false
+  public coordinates = [];
+  public lines = [];
+  public showMaxItems: boolean = false;
+  public newCoordinates = [];
 
   public getPosition(e: any) {
     let cursorX: number;
@@ -43,8 +45,12 @@ export class DrawAreaComponent implements OnInit {
   }
 
   public newCoordinate(event) {
-    console.log(event);
-    this.coordinates = event;
+    this.newCoordinates = event;
+    this.coordinates = this.newCoordinates;
+  }
+
+  public trackByFn(index, item) {
+    return index;
   }
 
   constructor() { }

@@ -58,13 +58,11 @@ export class PointComponent implements OnInit {
       'id': id,
       'styles': styles
     }
-
-    console.log(this.lines, 'lines');
+    
     this.lines.push(line);
   }
 
   public lastPoint() {
-    console.log(this.coordinates, 'lastPoint');
     /**
      * We need to find the 4th point to close the parallellogram
      * so, we need to find that 4th coordinate and here is a simple
@@ -86,7 +84,7 @@ export class PointComponent implements OnInit {
       y: (C.y + A.y) - B.y
      };
     this.coordinates.push(D);
-    //this.newCoordinate.emit(this.coordinates)
+    this.newCoordinate.emit(this.coordinates);
   }
 
   constructor() { }
