@@ -11,7 +11,6 @@ export class PointComponent implements OnInit {
   @Input() lines: any;
   @Input() coordinates: any;
   @Output('update') newCoordinate = new EventEmitter<any>();
-  private lastPointDistance: any;
 
   /**
    * Print the lines between each point the browser
@@ -59,22 +58,35 @@ export class PointComponent implements OnInit {
       'id': id,
       'styles': styles
     }
-    //add the line to the array
+
+    console.log(this.lines, 'lines');
     this.lines.push(line);
   }
 
   public lastPoint() {
-    console.log(this.coordinates);
-    // Formula of parallelogram to understand the logic
-    // Since PS→=QR→, you'll have
-    // (Sx−Px,Sy−Py)=(Rx−Qx,Ry−Qy) ⇒
-    // (x−(−2),y−4)=(3−1,3−(−2)) ⇒
-    // x−(−2)=3−1 and y−4=3−(−2)⇒S(0,9).
-    let P = this.coordinates[0];
-    let Q = this.coordinates[1];
-    let R = this.coordinates[2];
-    let S = {}
-    // this.newCoordinate.emit(this.coordinates)
+    console.log(this.coordinates, 'lastPoint');
+    /**
+     * We need to find the 4th point to close the parallellogram
+     * so, we need to find that 4th coordinate and here is a simple
+     * formula of how to do it, let's translate it to JS
+     *
+     * A(−2;4) , B(1;−2) and C(3;3) and D(x;y)
+     * Since AD → = BD → AD → = BD →, you'll have
+     * (Dx − Ax , Dy − Ay) = (Cx − Bx, Cy − By)
+     * (Dx − Ax , Dy − Ay) = (Cx − Bx, Cy − By)
+     * ⇒ (x − ( −2 ), y − 4) = (3 − 1, 3 − ( −2 ))
+     * ⇒ (x − ( −2 ) , y − 4) = (3 − 1, 3 − ( −2 ))
+     * ⇒ x − ( −2 ) = 3 − 1 and y − 4 = 3 − (−2) ⇒ S(0,9).
+     */
+    let A = this.coordinates[0];
+    let B = this.coordinates[1];
+    let C = this.coordinates[2];
+    let D = {
+      x: (C.x + A.x) - B.x,
+      y: (C.y + A.y) - B.y
+     };
+    this.coordinates.push(D);
+    //this.newCoordinate.emit(this.coordinates)
   }
 
   constructor() { }
@@ -82,7 +94,7 @@ export class PointComponent implements OnInit {
   ngOnInit() {
     //delete repeated lines
     this.lines = _.uniqBy(this.lines, function(e: any) { return e.id; });
-    if (this.coordinates.length >= 1) {
+    if (this.coordinates.length >= 1 || this.coordinates.length < 3) {
       for (let i = 0; i < this.coordinates.length; i++) {
         if (i >= 1) {
           //create the lines based on the points selected by the user
@@ -90,10 +102,9 @@ export class PointComponent implements OnInit {
         }
       }
     }
-    // as the user only select 3 point, to graph a parallelogram we need to
-    // calculate the last point in order to complete the graph
     if (this.coordinates.length === 3) {
       this.lastPoint();
+      this.drawLine(this.coordinates[2], this.coordinates[3]);
     }
   }
 
