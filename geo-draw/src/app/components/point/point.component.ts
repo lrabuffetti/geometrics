@@ -11,12 +11,13 @@ export class PointComponent implements OnInit {
   @Input() lines: any;
   @Input() coordinates: any;
   @Output('update') newCoordinate = new EventEmitter<any>();
+  @Input() indexPoint: any;
 
   /**
    * Print the lines between each point the browser
    * @param  {any}    pointA [pair of points]
    * @param  {any}    pointB [pair of points]
-   * @return {[lines]}        [updated array with the lines to be written]
+   * @return {[lines]}       [updated array with the lines to be written]
    */
   private drawLine(pointA: any, pointB: any) {
     let x1 = pointA.x;
@@ -58,7 +59,7 @@ export class PointComponent implements OnInit {
       'id': id,
       'styles': styles
     }
-    
+
     this.lines.push(line);
   }
 

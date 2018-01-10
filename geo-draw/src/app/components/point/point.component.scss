@@ -5,3 +5,23 @@
   background-color: red;
   position: relative;
 }
+
+.line:nth-child(2)[data-index='3'],
+.line:nth-child(4) {
+  display: none;
+}
+
+.point-number {
+  position: absolute;
+  top: 15px;
+  left: -40px;
+  bottom: 0;
+  right: 0;
+  font-weight: 600;
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid lightgray;
+  text-align: center;
+}

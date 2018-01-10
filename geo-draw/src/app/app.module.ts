@@ -8,17 +8,22 @@ import { DrawAreaComponent } from './components/draw-area/draw-area.component';
 import { PointComponent } from './components/point/point.component';
 import { LineComponent } from './components/line/line.component';
 
+import { NgvasModule } from "ngvas";
+import { ParallelogramComponent } from './components/parallelogram/parallelogram.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     DrawAreaComponent,
     PointComponent,
-    LineComponent
+    LineComponent,
+    ParallelogramComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgvasModule
   ],
   providers: [],
   bootstrap: [AppComponent]

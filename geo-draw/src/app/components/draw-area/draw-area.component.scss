@@ -1,11 +1,18 @@
 .draw-area {
   width: 100%;
   min-height: 800px;
-  margin: 20 auto;
   border: 1px solid black;
 
   .some-point {
     position: absolute;
     display: block;
+  }
+}
+
+.draw-area {
+  app-point.some-point:nth-child(4) {
+    div.line {
+      color: blue;
+    }
   }
 }

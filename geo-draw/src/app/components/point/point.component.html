@@ -1,7 +1,12 @@
-<div class="point rounded-circle"></div>
+<div class="point rounded-circle">
+  <div class="point-number">
+    {{indexPoint + 1}}
+  </div>
+</div>
 <div
-  *ngFor="let line of lines; let idx of index"
+  *ngFor="let line of lines; let idx = index"
   class="line"
   [ngStyle]="line.styles"
-  id="{{line.id}}">
+  id="{{line.id}}"
+  [attr.data-index]="indexPoint">
 </div>
