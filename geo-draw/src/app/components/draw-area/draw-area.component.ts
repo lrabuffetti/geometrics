@@ -1,5 +1,7 @@
 import { Component, OnInit, DoCheck, OnChanges } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
+import { Parallelogram } from '../../classes/parallelogram'
+import { Point } from '../../classes/point'
 
 @Component({
   selector: 'app-draw-area',
@@ -8,14 +10,14 @@ import { ChangeDetectorRef } from '@angular/core';
 })
 export class DrawAreaComponent implements OnInit {
   //variable to store the coordinates points on the plain
-  public coordinates = [];
+  public coordinates: Parallelogram = new Parallelogram();
   // this will be a variable to controll that the user can not put more than
   // just 3 points
   public showMaxItems: boolean = false;
   // just to be safe that we don't overide our primary array on the calculation
   // of the last point in the child component.
   // otherwise, space/time continous could be compromissed.
-  public newCoordinates = [];
+  public newCoordinates: Parallelogram = new Parallelogram();
 
   constructor(private cdr: ChangeDetectorRef) { }
 
@@ -32,9 +34,10 @@ export class DrawAreaComponent implements OnInit {
     let that = this; // we don't won't to change or interfeer with our scope
 
     // stop at 3th click
-    if (this.coordinates.length < 3) {
+    if (this.coordinates.length() < 3) {
       document.onclick = function(e) {
-        that.coordinates.push({ x: e.pageX, y: e.pageY })
+        let point = new Point(e.pageX, e.pageY);
+        that.coordinates.setPoint(point);
       }
     } else { //no more clicks I said
       e.stopPropagation();
@@ -49,7 +52,7 @@ export class DrawAreaComponent implements OnInit {
    * @return {[type]}   [description]
    */
   public resetPoints(e: any) {
-    this.coordinates = [];
+    this.coordinates.deletePoints();
     e.stopPropagation(); // it's a button action, without this, point of caos will be executed
     this.showMaxItems = false;
   }

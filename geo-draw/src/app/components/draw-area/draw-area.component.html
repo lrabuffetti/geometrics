@@ -5,8 +5,16 @@
   <button type="button" class="btn btn-primary float-right" (click)="resetPoints($event)" name="button">Reset</button>
 </div>
 <div id="draw-board" class="draw-area" (click)="getPosition($event)">
-  <app-point class="some-point" *ngFor="let item of coordinates; let i = index; trackBy: trackByFn" [ngStyle]="pointPosition(item)" [coordinates]="coordinates" [indexPoint]="i" (update)="newCoordinate($event)">
+  <app-point
+    class="some-point"
+    *ngFor="let item of coordinates.getPoints(); let i = index; trackBy: trackByFn"
+    [ngStyle]="pointPosition(item)"
+    [coordinates]="coordinates"
+    [indexPoint]="i"
+    (update)="newCoordinate($event)">
   </app-point>
 
-  <app-parallelogram></app-parallelogram>
+  <!-- <app-parallelogram *ngIf="coordinates.length() === 4" [points]="coordinates"></app-parallelogram>
+
+  <app-circle *ngIf="coordinates.length() === 4" [points]="coordinates"></app-circle> -->
 </div>

@@ -10,6 +10,7 @@ import { LineComponent } from './components/line/line.component';
 
 import { NgvasModule } from "ngvas";
 import { ParallelogramComponent } from './components/parallelogram/parallelogram.component';
+import { CircleComponent } from './components/circle/circle.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ParallelogramComponent } from './components/parallelogram/parallelogram
     DrawAreaComponent,
     PointComponent,
     LineComponent,
-    ParallelogramComponent
+    ParallelogramComponent,
+    CircleComponent
   ],
   imports: [
     BrowserModule,

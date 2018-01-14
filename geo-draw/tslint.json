@@ -30,7 +30,7 @@
     "label-position": true,
     "max-line-length": [
       true,
-      140
+      120
     ],
     "member-access": false,
     "member-ordering": [
@@ -109,7 +109,7 @@
     ],
     "typeof-compare": true,
     "unified-signatures": true,
-    "variable-name": false,
+    "variable-name": true,
     "whitespace": [
       true,
       "check-branch",
