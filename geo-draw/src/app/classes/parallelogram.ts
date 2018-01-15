@@ -1,8 +1,11 @@
 import { Point } from './point';
+import * as _ from 'lodash';
 
 export class Parallelogram {
   constructor(
-    private points = []
+    private points = [],
+    private lines = [],
+    private massCenter?: Point
   ) { }
 
   public setPoint(point: Point) {
@@ -50,6 +53,7 @@ export class Parallelogram {
    * @return {[lines]}       [updated array with the lines to be written]
    */
   public drawLine(pointA: Point, pointB: Point) {
+
     let x1 = pointA.getX();
     let y1 = pointA.getY();
     let x2 = pointB.getX();
@@ -88,16 +92,66 @@ export class Parallelogram {
     // set the line object
     let line = {
       'id': id,
-      'styles': styles
+      'styles': styles,
+      'slope': m,
+      'angle': angle,
+      'distance': d,
+      'transform': transform,
     }
 
+    this.lines.push(line);
     return line;
   }
 
-  public setCenterOfMass() { };
+  private setCenterOfMass() {
+    if (this.points.length < 4) {
+      return 'you need 4 points of the parallelogram';
+    } else {
+      /**
+        this is the formula to calculate the mass center of a parallelogram
+        of course, we first need the 4 points, so, if you don't have all of them
+        an error message will appear, just for control
+        (A+C, B+D)
+        ----, ----
+          2    2
+        (Ax,Ay + Cx,Cy)/2 , (Bx,By + Dx,Dy)/2
+        (Ax+Cx + Ay+Cy)/2 , (Bx+Dx + By+Dy)/2
+      */
+      let A = this.points[0];
+      let B = this.points[1];
+      let C = this.points[2];
+      let D = this.points[3];
+      let firstPoint = (A.getX() + B.getX() + C.getX() + D.getX()) / 4;
+      let secondPoint = (A.getY() + B.getY() + C.getY() + D.getY()) / 4;
+      let massCenter = new Point(firstPoint, secondPoint);
+      this.massCenter = massCenter;
+    }
+  };
+
+  public getShortestLine() {
+    let shortestLine = 0;
+    for (let i = 0; i < this.lines.length; i++) {
+      if (i === 0) {
+        shortestLine = this.lines[i].distance;
+      } else if(shortestLine > this.lines[i].distance) {
+        shortestLine = this.lines[i].distance;
+      }
+    }
+
+    return shortestLine;
+  }
+
+  public getCenterOfMass() {
+    this.setCenterOfMass()
+    return this.massCenter;
+  }
 
   public getPoints() {
     return this.points;
+  }
+
+  public getLines() {
+    return this.lines;
   }
 
 }

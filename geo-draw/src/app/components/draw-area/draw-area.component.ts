@@ -10,14 +10,14 @@ import { Point } from '../../classes/point'
 })
 export class DrawAreaComponent implements OnInit {
   //variable to store the coordinates points on the plain
-  public coordinates: Parallelogram = new Parallelogram();
+  public coordinates: Parallelogram = new Parallelogram([],[]);
   // this will be a variable to controll that the user can not put more than
   // just 3 points
   public showMaxItems: boolean = false;
   // just to be safe that we don't overide our primary array on the calculation
   // of the last point in the child component.
   // otherwise, space/time continous could be compromissed.
-  public newCoordinates: Parallelogram = new Parallelogram();
+  public newCoordinates: Parallelogram = new Parallelogram([],[]);
 
   constructor(private cdr: ChangeDetectorRef) { }
 
@@ -67,10 +67,30 @@ export class DrawAreaComponent implements OnInit {
   public pointPosition(item) {
     let style = {
       'top': item.y + 'px',
-      'left': item.x + 'px'
+      'left': item.x + 'px',
     }
-
     return style;
+  }
+
+  /**
+   * This is the function we use to position the circle in the middle of the parallelogram
+   * some may ask why is not in the circle class/component, I think that the elements and their
+   * positions belogs to the draw-area.
+   * @param  {[object]} item [description]
+   * @return {[object]}      [description]
+   */
+  public circlePosition(item) {
+    let style = {
+      'top': item.y + 'px',
+      'left': item.x + 'px',
+      'margin-top': -(this.coordinates.getShortestLine()/2) + 'px',
+      'margin-left': -(this.coordinates.getShortestLine()/2) + 'px',
+    }
+    return style;
+  }
+
+  public parallelogram() {
+    
   }
 
   /**

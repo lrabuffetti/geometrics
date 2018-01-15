@@ -14,7 +14,14 @@
     (update)="newCoordinate($event)">
   </app-point>
 
-  <!-- <app-parallelogram *ngIf="coordinates.length() === 4" [points]="coordinates"></app-parallelogram>
+  <app-circle
+    class="some-point"
+    *ngIf="coordinates.length() === 4"
+    [ngStyle]="circlePosition(coordinates.getCenterOfMass())"
+    [points]="coordinates">
+  </app-circle>
 
-  <app-circle *ngIf="coordinates.length() === 4" [points]="coordinates"></app-circle> -->
+  <div class="" [ngStyle]="parallelogram()">
+
+  </div>
 </div>

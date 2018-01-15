@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Parallelogram } from '../../classes/parallelogram'
 
 @Component({
   selector: 'app-circle',
@@ -7,18 +8,17 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CircleComponent implements OnInit {
 
-  @Input() points;
+  @Input() points: Parallelogram;
+  public pointStyles: object = {};
 
   constructor() { }
 
   ngOnInit() {
-    let canvas = document.getElementById('circle');
-    let ctx = canvas.getContext('2d');
-    ctx.fillStyle='#FECC00';
-    ctx.beginPath();
-    ctx.arc(75, 75, 50, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.fill();
+    this.pointStyles = {
+      'width': this.points.getShortestLine() + 'px',
+      'height': this.points.getShortestLine() + 'px',
+      'background-color': '#FECC00',
+    }
   }
 
 }
