@@ -6,5 +6,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
+  title = 'Geometrics App';
+
+  public onRightClick(e) {
+    console.log('here', e)
+    e.stopPropagation()
+    return false;
+  }
+
+  public onClick(e) {
+    console.log('here', e)
+    e.stopPropagation()
+    return false;
+  }
 }

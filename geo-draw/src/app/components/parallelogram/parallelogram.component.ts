@@ -16,6 +16,7 @@ export class ParallelogramComponent implements OnInit {
 
   ngOnInit() {
     if (this.points.length === 4) {
+      console.log(this.points)
     }
   }
 
