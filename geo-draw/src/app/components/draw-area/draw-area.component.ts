@@ -90,7 +90,17 @@ export class DrawAreaComponent implements OnInit {
   }
 
   public parallelogram() {
-    
+    if (this.coordinates.length() === 4) {
+      console.log(this.coordinates.getLines());
+      return {
+        'width': 150 + 'px',
+        'height': 100 + 'px',
+        '-webkit-transform': 'skew(' + 20 + 'deg)',
+        '-moz-transform': 'skew(' + 20 + 'deg)',
+        '-o-transform': 'skew(' + 20 + 'deg)',
+        'background-color': 'red',
+      }
+    }
   }
 
   /**

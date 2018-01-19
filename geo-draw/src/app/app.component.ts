@@ -7,16 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Geometrics App';
-
-  public onRightClick(e) {
-    console.log('here', e)
-    e.stopPropagation()
-    return false;
-  }
-
-  public onClick(e) {
-    console.log('here', e)
-    e.stopPropagation()
-    return false;
-  }
 }
