@@ -10,14 +10,14 @@ import { Point } from '../../classes/point'
 })
 export class DrawAreaComponent implements OnInit {
   //variable to store the coordinates points on the plain
-  public coordinates: Parallelogram = new Parallelogram([],[]);
+  public coordinates: Parallelogram = new Parallelogram([], []);
   // this will be a variable to controll that the user can not put more than
   // just 3 points
   public showMaxItems: boolean = false;
   // just to be safe that we don't overide our primary array on the calculation
   // of the last point in the child component.
   // otherwise, space/time continous could be compromissed.
-  public newCoordinates: Parallelogram = new Parallelogram([],[]);
+  public newCoordinates: Parallelogram = new Parallelogram([], []);
 
   constructor(private cdr: ChangeDetectorRef) { }
 
@@ -83,22 +83,33 @@ export class DrawAreaComponent implements OnInit {
     let style = {
       'top': item.y + 'px',
       'left': item.x + 'px',
-      'margin-top': -(this.coordinates.getShortestLine()/2) + 'px',
-      'margin-left': -(this.coordinates.getShortestLine()/2) + 'px',
+      'margin-top': -(this.coordinates.getShortestLine() / 2) + 'px',
+      'margin-left': -(this.coordinates.getShortestLine() / 2) + 'px',
     }
     return style;
   }
 
+  private setParalellogramSize(lineZero: object, lineOne: object, points) {
+    console.log(lineZero, lineOne, points)
+  }
+
   public parallelogram() {
+    let lineZero = {}
+    let height = 0
+    let position = {}
     if (this.coordinates.length() === 4) {
-      console.log(this.coordinates.getLines());
+      let size = this.setParalellogramSize(this.coordinates.getLine(0), this.coordinates.getLine(2), this.coordinates.getPoints());
+      let lineZero = this.coordinates.getLine(0); //on line 0 we have the direction angle of the parallelogram
+      let height = this.coordinates.getLine(2).styles.width;
+      let position = this.coordinates.getInitialPosition()
       return {
-        'width': 150 + 'px',
-        'height': 100 + 'px',
-        '-webkit-transform': 'skew(' + 20 + 'deg)',
-        '-moz-transform': 'skew(' + 20 + 'deg)',
-        '-o-transform': 'skew(' + 20 + 'deg)',
-        'background-color': 'red',
+        'width': height,
+        'height': lineZero.styles.width,
+        'background-color': '#006aa7',
+        'position': 'absolute',
+        'left': position.x + 'px',
+        'top': position.y + 'px',
+        'transform': 'skew(' + lineZero.transform + 'deg)'// + 'rotate(' + lineZero.transform + 'deg)',
       }
     }
   }

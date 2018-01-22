@@ -13,7 +13,9 @@ export class Parallelogram {
   };
 
   public deletePoints() {
+    this.lines = [];
     this.points = [];
+    this.massCenter = new Point(0,0);
   };
 
   public length() {
@@ -152,6 +154,14 @@ export class Parallelogram {
 
   public getLines() {
     return this.lines;
+  }
+
+  public getLine(position: number) {
+    return this.lines[position];
+  }
+
+  public getInitialPosition() {
+    return this.points[0];
   }
 
 }
