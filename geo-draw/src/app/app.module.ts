@@ -8,10 +8,10 @@ import { AppComponent } from './app.component';
 import { DrawAreaComponent } from './components/draw-area/draw-area.component';
 import { PointComponent } from './components/point/point.component';
 import { LineComponent } from './components/line/line.component';
-
-import { NgvasModule } from "ngvas";
 import { ParallelogramComponent } from './components/parallelogram/parallelogram.component';
 import { CircleComponent } from './components/circle/circle.component';
+
+import { NgvasModule } from "ngvas";
 
 
 @NgModule({

@@ -19,6 +19,17 @@ export class DrawAreaComponent implements OnInit {
   // otherwise, space/time continous could be compromissed.
   public newCoordinates: Parallelogram = new Parallelogram([], []);
 
+  public cWidth: number = 1000;
+  public cHeight: number = 1000;
+  public cPoints = [
+    [[581, 349], [807, 247]],
+    [[807, 247], [768, 34]],
+    [[768, 34], [450, 66]],
+    [[450, 66], [581, 349]]
+  ]
+  public xPos: number = 130
+  public yPos : number = 240
+
   constructor(private cdr: ChangeDetectorRef) { }
 
   /**
@@ -89,31 +100,6 @@ export class DrawAreaComponent implements OnInit {
     return style;
   }
 
-  private setParalellogramSize(lineZero: object, lineOne: object, points) {
-    console.log(lineZero, lineOne, points)
-  }
-
-  public parallelogram() {
-    let lineZero = {}
-    let height = 0
-    let position = {}
-    if (this.coordinates.length() === 4) {
-      let size = this.setParalellogramSize(this.coordinates.getLine(0), this.coordinates.getLine(2), this.coordinates.getPoints());
-      let lineZero = this.coordinates.getLine(0); //on line 0 we have the direction angle of the parallelogram
-      let height = this.coordinates.getLine(2).styles.width;
-      let position = this.coordinates.getInitialPosition()
-      return {
-        'width': height,
-        'height': lineZero.styles.width,
-        'background-color': '#006aa7',
-        'position': 'absolute',
-        'left': position.x + 'px',
-        'top': position.y + 'px',
-        'transform': 'skew(' + lineZero.transform + 'deg)'// + 'rotate(' + lineZero.transform + 'deg)',
-      }
-    }
-  }
-
   /**
    * this is the most interesting function, why?
    * because it takes a value calculated on the children to perform
@@ -135,7 +121,9 @@ export class DrawAreaComponent implements OnInit {
     return index;
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this.cPoints)
+  }
 
   ngAfterViewChecked() {
     this.cdr.detectChanges(); // we need to update content after methods executions

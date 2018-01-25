@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { TweenMax } from 'gsap'
-import * as _ from "lodash";
-import { NgvasModule, tweens, hitAreas } from "ngvas";
+import { Component, OnInit, Input } from '@angular/core';
+import { Parallelogram } from '../../classes/parallelogram'
+import { Point } from '../../classes/point'
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-parallelogram',
@@ -10,14 +10,21 @@ import { NgvasModule, tweens, hitAreas } from "ngvas";
 })
 export class ParallelogramComponent implements OnInit {
 
-  @Input() points;
+  @Input() parallelogram: Parallelogram;
+  public cWidth: number = 100;
+  public cHeight: number = 100;
+  public initPosition: Point;
+  public pSides: any;
 
   constructor() { }
 
   ngOnInit() {
-    if (this.points.length === 4) {
-      console.log(this.points)
-    }
+    console.log(this.parallelogram, this.parallelogram.getWidth(), this.parallelogram.getHeight())
+    this.cWidth = this.parallelogram.getWidth();
+    this.cHeight = this.parallelogram.getHeight();
+    console.log(this.cWidth, this.cHeight)
+    this.initPosition = this.parallelogram.getInitialPosition();
+    this.pSides = this.parallelogram.getPoints();
   }
 
 }

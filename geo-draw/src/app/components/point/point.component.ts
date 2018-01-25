@@ -32,6 +32,8 @@ export class PointComponent implements OnInit {
     if (this.coordinates.length() === 3) {
       let points = this.coordinates.getPoints();
       this.coordinates.lastPoint();
+      this.coordinates.setWidth(this.coordinates.getLine(0).distance);
+      this.coordinates.setHeight(this.coordinates.getLine(2).distance);
       this.newCoordinate.emit(this.coordinates);
       this.lines.push(this.coordinates.drawLine(points[2], points[3]));
     }

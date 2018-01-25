@@ -5,11 +5,31 @@ export class Parallelogram {
   constructor(
     private points = [],
     private lines = [],
-    private massCenter?: Point
+    private massCenter?: Point,
+    private width: number = 0,
+    private height: number = 0,
   ) { }
 
   public setPoint(point: Point) {
     this.points.push(point);
+  };
+
+  public setWidth(width: number) {
+    console.log(width)
+    this.width = width;
+  };
+
+  public getWidth() {
+    return this.width;
+  };
+
+  public setHeight(height: number) {
+    console.log(height)
+    this.height = height;
+  };
+
+  public getHeight() {
+    return this.height;
   };
 
   public deletePoints() {
@@ -125,8 +145,7 @@ export class Parallelogram {
       let D = this.points[3];
       let firstPoint = (A.getX() + B.getX() + C.getX() + D.getX()) / 4;
       let secondPoint = (A.getY() + B.getY() + C.getY() + D.getY()) / 4;
-      let massCenter = new Point(firstPoint, secondPoint);
-      this.massCenter = massCenter;
+      this.massCenter = new Point(firstPoint, secondPoint);
     }
   };
 

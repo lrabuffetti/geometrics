@@ -1,1 +1,13 @@
-
+<ngvas [width]="cWidth" [height]="cHeight">
+  <ngvas-polygon
+    fill="#ff0000"
+    [x]="initPosition.getX()"
+    [y]="initPosition.getY()"
+    [sides]="[
+      [ [pSides[0].x, pSides[0].y], [pSides[1].x, pSides[1].y] ],
+      [ [pSides[1].x, pSides[1].y], [pSides[2].x, pSides[2].y] ],
+      [ [pSides[2].x, pSides[2].y], [pSides[3].x, pSides[3].y] ],
+      [ [pSides[3].x, pSides[3].y], [pSides[0].x, pSides[0].y] ]
+      ]">
+  </ngvas-polygon>
+</ngvas>
