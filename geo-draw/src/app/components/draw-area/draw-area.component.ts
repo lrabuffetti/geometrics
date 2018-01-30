@@ -1,7 +1,6 @@
-import { Component, OnInit, DoCheck, OnChanges } from '@angular/core';
-import { ChangeDetectorRef } from '@angular/core';
-import { Parallelogram } from '../../classes/parallelogram'
-import { Point } from '../../classes/point'
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Parallelogram } from '../../classes/parallelogram';
+import { Point } from '../../classes/point';
 
 @Component({
   selector: 'app-draw-area',
@@ -19,16 +18,9 @@ export class DrawAreaComponent implements OnInit {
   // otherwise, space/time continous could be compromissed.
   public newCoordinates: Parallelogram = new Parallelogram([], []);
 
-  public cWidth: number = 1000;
-  public cHeight: number = 1000;
-  public cPoints = [
-    [[581, 349], [807, 247]],
-    [[807, 247], [768, 34]],
-    [[768, 34], [450, 66]],
-    [[450, 66], [581, 349]]
-  ]
-  public xPos: number = 130
-  public yPos : number = 240
+  private ctx: object = {};
+
+  private circle: object = {};
 
   constructor(private cdr: ChangeDetectorRef) { }
 
@@ -49,6 +41,7 @@ export class DrawAreaComponent implements OnInit {
       document.onclick = function(e) {
         let point = new Point(e.pageX, e.pageY);
         that.coordinates.setPoint(point);
+        that.setCanvasPoint(e);
       }
     } else { //no more clicks I said
       e.stopPropagation();
@@ -66,6 +59,12 @@ export class DrawAreaComponent implements OnInit {
     this.coordinates.deletePoints();
     e.stopPropagation(); // it's a button action, without this, point of caos will be executed
     this.showMaxItems = false;
+    this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.circle.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  public preventClick(e) {
+    e.stopPropagation(); // it's a button action, without this, point of caos will be executed
   }
 
   /**
@@ -76,11 +75,10 @@ export class DrawAreaComponent implements OnInit {
    * @return {[object]}      [return styles for the points position]
    */
   public pointPosition(item) {
-    let style = {
+    return {
       'top': item.y + 'px',
       'left': item.x + 'px',
     }
-    return style;
   }
 
   /**
@@ -121,12 +119,83 @@ export class DrawAreaComponent implements OnInit {
     return index;
   }
 
+  public polygonPosition() {
+    let lines = this.coordinates.getLines();
+    let position = this.coordinates.getInitialPosition()
+    let points = this.coordinates.getPoints()
+    return {
+      'position': 'absolute',
+      'background-color': '#ccc',
+      'top': position.y + 'px',
+      'left': position.x + 'px',
+      'width': this.coordinates.getWidth() + 'px',
+      'height': this.coordinates.getHeight() + 'px',
+      'transform': 'rotate(' + lines[0].transform + 'deg) ' + 'skew(5deg)'
+    }
+  }
+
+  public setCanvasPoint(e: any) {
+    this.ctx.beginPath();
+    this.ctx.arc((1000 - e.pageX), e.pageY, 5, 0, 2 * Math.PI);
+    this.circle.fillStyle = '#FF0000';
+    this.circle.fill();
+    this.ctx.stroke();
+  }
+
+  public setLastCanvasPoint() {
+    let points = this.coordinates.getPoints()
+    this.ctx.beginPath();
+    this.ctx.arc((1000 - points[3].x), points[3].y, 5, 0, 2 * Math.PI);
+    this.circle.fillStyle = '#FF0000';
+    this.circle.fill();
+    this.ctx.stroke();
+  }
+
+  public drawCanvasLines() {
+
+    let points = this.coordinates.getPoints();
+
+    this.ctx.beginPath();
+
+    this.ctx.moveTo((1000 - points[0].x), points[0].y);
+    this.ctx.lineTo((1000 - points[1].x), points[1].y);
+    this.ctx.lineTo((1000 - points[2].x), points[2].y);
+    this.ctx.lineTo((1000 - points[3].x), points[3].y);
+    this.ctx.lineTo((1000 - points[0].x), points[0].y);
+
+    this.ctx.closePath();
+    this.ctx.fillStyle = '#006AA7';
+    this.ctx.fill();
+    this.ctx.stroke();
+  }
+
+  public drawCircleCanvas() {
+    let center = this.coordinates.getCenterOfMass();
+    let width = this.coordinates.getShortestLine();
+    this.circle.beginPath();
+    this.circle.arc((1000 - center.x), center.y, (width / 2), 0, 2 * Math.PI);
+    this.circle.closePath();
+    this.circle.fillStyle = '#FECC00';
+    this.circle.fill();
+    this.circle.stroke();
+  }
+
   ngOnInit() {
-    console.log(this.cPoints)
+    let c = document.getElementById('canvas');
+    this.ctx = c.getContext('2d');
+
+    let circle = document.getElementById('canvas2');
+    this.circle = c.getContext('2d');
   }
 
   ngAfterViewChecked() {
     this.cdr.detectChanges(); // we need to update content after methods executions
+    if (this.coordinates.length() === 4) {
+      this.polygonPosition();
+      this.setLastCanvasPoint();
+      this.drawCanvasLines();
+      this.drawCircleCanvas();
+    }
   }
 
 }

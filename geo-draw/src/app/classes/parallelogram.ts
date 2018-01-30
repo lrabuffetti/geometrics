@@ -10,38 +10,66 @@ export class Parallelogram {
     private height: number = 0,
   ) { }
 
+  /**
+   * Add a point into the points collections
+   * @param  point [point object an X and an Y number]
+   */
   public setPoint(point: Point) {
     this.points.push(point);
   };
 
+  /**
+   * I think that the name of the method said everything
+   * @param  width [numberrrrrrr]
+   */
   public setWidth(width: number) {
-    console.log(width)
     this.width = width;
   };
 
+  /**
+   * same as above
+   * @return [description]
+   */
   public getWidth() {
     return this.width;
   };
 
+  /**
+   * againnnn the name said everything
+   * @param  height [numberrrrrrr]
+   */
   public setHeight(height: number) {
-    console.log(height)
     this.height = height;
   };
 
+  /**
+   * same as above above above ...
+   * @return [description]
+   */
   public getHeight() {
     return this.height;
   };
 
+  /**
+   * This is the most cruel of all the functions
+   */
   public deletePoints() {
     this.lines = [];
     this.points = [];
     this.massCenter = new Point(0,0);
   };
 
+  /**
+   * lenght method
+   * @return [number]
+   */
   public length() {
     return this.points.length;
   }
 
+  /**
+   * This function calculates the lastPoint of the parallelogram based on the another 3 points
+   */
   public lastPoint() {
     /**
      * We need to find the 4th point to close the parallellogram
@@ -125,6 +153,10 @@ export class Parallelogram {
     return line;
   }
 
+  /**
+   * Here we calculate the mass of center to position the circunference in the middle of the parallelogram
+   * @return [description]
+   */
   private setCenterOfMass() {
     if (this.points.length < 4) {
       return 'you need 4 points of the parallelogram';
@@ -149,6 +181,10 @@ export class Parallelogram {
     }
   };
 
+  /**
+   * This function if to set the circunference radius
+   * @return [description]
+   */
   public getShortestLine() {
     let shortestLine = 0;
     for (let i = 0; i < this.lines.length; i++) {
@@ -162,25 +198,47 @@ export class Parallelogram {
     return shortestLine;
   }
 
+  /**
+   * All said in the name
+   * @return [point]
+   */
   public getCenterOfMass() {
     this.setCenterOfMass()
     return this.massCenter;
   }
 
+  /**
+   * Return all the points in the parallelogram
+   * @return [array of points]
+   */
   public getPoints() {
     return this.points;
   }
 
+  /**
+   * Return all the lines in the parallelogram
+   * @return [array of lines]
+   */
   public getLines() {
     return this.lines;
   }
 
+  /**
+   * Return an especific line
+   * @return [single line object]
+   */
   public getLine(position: number) {
     return this.lines[position];
   }
 
+  /**
+   * Return the start point
+   * @return [first point]
+   */
   public getInitialPosition() {
     return this.points[0];
   }
+
+  public setCanvasParallelogram(canvas: object) {}
 
 }
