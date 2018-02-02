@@ -8,7 +8,13 @@ export class Parallelogram {
     private massCenter?: Point,
     private width: number = 0,
     private height: number = 0,
+    private parallelogramCanvas: object = {},
+    private circleCanvas: object = {}
   ) { }
+
+  public setParallelogram(parallelogram) { this.parallelogramCanvas = parallelogram; }
+
+  public setCircle(circle) { this.circleCanvas = circle; }
 
   /**
    * Add a point into the points collections
@@ -237,6 +243,21 @@ export class Parallelogram {
    */
   public getInitialPosition() {
     return this.points[0];
+  }
+
+  public polygonPosition() {
+    let lines = this.getLines();
+    let position = this.getInitialPosition()
+    let points = this.getPoints()
+    return {
+      'position': 'absolute',
+      'background-color': '#ccc',
+      'top': position.y + 'px',
+      'left': position.x + 'px',
+      'width': this.getWidth() + 'px',
+      'height': this.getHeight() + 'px',
+      'transform': 'rotate(' + lines[0].transform + 'deg) ' + 'skew(5deg)'
+    }
   }
 
   public setCanvasParallelogram(canvas: object) {}

@@ -4,10 +4,20 @@
   </h1>
   <button type="button" class="btn btn-primary float-right" (click)="resetPoints($event)" name="button">Reset</button>
 </div>
-<div *ngIf="coordinates.length() !== 4" id="draw-board" class="draw-area" (click)="getPosition($event)">
-  <app-point class="some-point" *ngFor="let item of coordinates.getPoints(); let i = index; trackBy: trackByFn" [ngStyle]="pointPosition(item)" [coordinates]="coordinates" [indexPoint]="i" (update)="newCoordinate($event)"></app-point>
-  <app-circle class="some-point" *ngIf="coordinates.length() === 4" [ngStyle]="circlePosition(coordinates.getCenterOfMass())" [points]="coordinates"></app-circle>
-  <div *ngIf="coordinates.length() === 4" [ngStyle]="polygonPosition()"></div>
+<div id="draw-board" class="draw-area" (click)="getPosition($event)">
+  <app-point
+    ngDraggable
+    draggable="true"
+    (started)="onStart($event, i)"
+    (stopped)="onStop($event, i)"
+    id="point-{{i}}"
+    class="some-point"
+    *ngFor="let item of coordinates.getPoints(); let i = index; trackBy: trackByFn"
+    [ngStyle]="pointPosition(item)"
+    [coordinates]="coordinates"
+    [indexPoint]="i"
+    (update)="newCoordinate($event)">
+  </app-point>
 </div>
-<canvas id="canvas" class="mt-3" width="1000" height="1000" style="border: 1px solid black; border-radius: 5px" (click)="preventClick($event)"></canvas>
-<canvas *ngIf="coordinates.length() === -1" id="canvas2" class="mt-3" width="1000" height="1000" style="border: 1px solid black; border-radius: 5px" (click)="preventClick($event)"></canvas>
+<canvas #parallelogram id="canvas" class="mt-3" width="{{cWidht}}" height="{{cHeight}}" style="border: 1px solid black; border-radius: 5px" (click)="preventClick($event)"></canvas>
+<canvas #circle *ngIf="coordinates.length() === -1" id="canvas2" class="mt-3" width="{{cWidht}}" height="{{cHeight}}" style="border: 1px solid black; border-radius: 5px" (click)="preventClick($event)"></canvas>

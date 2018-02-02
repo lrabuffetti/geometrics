@@ -12,6 +12,7 @@ import { ParallelogramComponent } from './components/parallelogram/parallelogram
 import { CircleComponent } from './components/circle/circle.component';
 
 import { NgvasModule } from "ngvas";
+import { AngularDraggableModule } from 'angular2-draggable';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { NgvasModule } from "ngvas";
     BrowserModule,
     AppRoutingModule,
     NgvasModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AngularDraggableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

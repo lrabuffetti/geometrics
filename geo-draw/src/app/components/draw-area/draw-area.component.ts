@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { Parallelogram } from '../../classes/parallelogram';
 import { Point } from '../../classes/point';
 
@@ -18,9 +18,14 @@ export class DrawAreaComponent implements OnInit {
   // otherwise, space/time continous could be compromissed.
   public newCoordinates: Parallelogram = new Parallelogram([], []);
 
-  private ctx: object = {};
+  private ctx: CanvasRenderingContext2D;
+  private circle: CanvasRenderingContext2D;
 
-  private circle: object = {};
+  public cWidht: number = 0;
+  public cHeight: number = 0;
+
+  @ViewChild('parallelogram') public canvas: ElementRef;
+  @ViewChild('circle') public canvas2: ElementRef;
 
   constructor(private cdr: ChangeDetectorRef) { }
 
@@ -40,6 +45,7 @@ export class DrawAreaComponent implements OnInit {
     if (this.coordinates.length() < 3) {
       document.onclick = function(e) {
         let point = new Point(e.pageX, e.pageY);
+        console.log(e.pageX, e.pageY)
         that.coordinates.setPoint(point);
         that.setCanvasPoint(e);
       }
@@ -59,8 +65,8 @@ export class DrawAreaComponent implements OnInit {
     this.coordinates.deletePoints();
     e.stopPropagation(); // it's a button action, without this, point of caos will be executed
     this.showMaxItems = false;
-    this.ctx.clearRect(0, 0, canvas.width, canvas.height);
-    this.circle.clearRect(0, 0, canvas.width, canvas.height);
+    this.ctx.clearRect(0, 0, 1000, 1000);
+    this.circle.clearRect(0, 0, 1000, 1000);
   }
 
   public preventClick(e) {
@@ -119,24 +125,17 @@ export class DrawAreaComponent implements OnInit {
     return index;
   }
 
-  public polygonPosition() {
-    let lines = this.coordinates.getLines();
-    let position = this.coordinates.getInitialPosition()
-    let points = this.coordinates.getPoints()
-    return {
-      'position': 'absolute',
-      'background-color': '#ccc',
-      'top': position.y + 'px',
-      'left': position.x + 'px',
-      'width': this.coordinates.getWidth() + 'px',
-      'height': this.coordinates.getHeight() + 'px',
-      'transform': 'rotate(' + lines[0].transform + 'deg) ' + 'skew(5deg)'
-    }
+  public onStart(event, index) {
+
+  }
+
+  public onStop(event, index) {
+    console.log('stopped output:', event, index);
   }
 
   public setCanvasPoint(e: any) {
     this.ctx.beginPath();
-    this.ctx.arc((1000 - e.pageX), e.pageY, 5, 0, 2 * Math.PI);
+    this.ctx.arc((e.pageX - this.canvas.nativeElement.offsetLeft), e.pageY, 5, 0, 2 * Math.PI);
     this.circle.fillStyle = '#FF0000';
     this.circle.fill();
     this.ctx.stroke();
@@ -145,7 +144,7 @@ export class DrawAreaComponent implements OnInit {
   public setLastCanvasPoint() {
     let points = this.coordinates.getPoints()
     this.ctx.beginPath();
-    this.ctx.arc((1000 - points[3].x), points[3].y, 5, 0, 2 * Math.PI);
+    this.ctx.arc((points[3].x - this.canvas.nativeElement.offsetLeft), points[3].y, 5, 0, 2 * Math.PI);
     this.circle.fillStyle = '#FF0000';
     this.circle.fill();
     this.ctx.stroke();
@@ -157,11 +156,11 @@ export class DrawAreaComponent implements OnInit {
 
     this.ctx.beginPath();
 
-    this.ctx.moveTo((1000 - points[0].x), points[0].y);
-    this.ctx.lineTo((1000 - points[1].x), points[1].y);
-    this.ctx.lineTo((1000 - points[2].x), points[2].y);
-    this.ctx.lineTo((1000 - points[3].x), points[3].y);
-    this.ctx.lineTo((1000 - points[0].x), points[0].y);
+    this.ctx.moveTo((points[0].x - this.canvas.nativeElement.offsetLeft), points[0].y);
+    this.ctx.lineTo((points[1].x - this.canvas.nativeElement.offsetLeft), points[1].y);
+    this.ctx.lineTo((points[2].x - this.canvas.nativeElement.offsetLeft), points[2].y);
+    this.ctx.lineTo((points[3].x - this.canvas.nativeElement.offsetLeft), points[3].y);
+    this.ctx.lineTo((points[0].x - this.canvas.nativeElement.offsetLeft), points[0].y);
 
     this.ctx.closePath();
     this.ctx.fillStyle = '#006AA7';
@@ -173,7 +172,7 @@ export class DrawAreaComponent implements OnInit {
     let center = this.coordinates.getCenterOfMass();
     let width = this.coordinates.getShortestLine();
     this.circle.beginPath();
-    this.circle.arc((1000 - center.x), center.y, (width / 2), 0, 2 * Math.PI);
+    this.circle.arc((center.getX() - this.canvas.nativeElement.offsetLeft), center.getY(), (width / 2), 0, 2 * Math.PI);
     this.circle.closePath();
     this.circle.fillStyle = '#FECC00';
     this.circle.fill();
@@ -181,17 +180,16 @@ export class DrawAreaComponent implements OnInit {
   }
 
   ngOnInit() {
-    let c = document.getElementById('canvas');
-    this.ctx = c.getContext('2d');
-
-    let circle = document.getElementById('canvas2');
-    this.circle = c.getContext('2d');
+    const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
+    this.ctx = canvasEl.getContext('2d');
+    this.circle = canvasEl.getContext('2d');
+    this.cWidht = document.getElementById('draw-board').offsetWidth;
+    this.cHeight = document.getElementById('draw-board').offsetHeight;
   }
 
   ngAfterViewChecked() {
     this.cdr.detectChanges(); // we need to update content after methods executions
     if (this.coordinates.length() === 4) {
-      this.polygonPosition();
       this.setLastCanvasPoint();
       this.drawCanvasLines();
       this.drawCircleCanvas();
