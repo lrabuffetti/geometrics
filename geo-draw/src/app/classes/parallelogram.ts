@@ -9,7 +9,8 @@ export class Parallelogram {
     private width: number = 0,
     private height: number = 0,
     private parallelogramCanvas: object = {},
-    private circleCanvas: object = {}
+    private circleCanvas: object = {},
+    private draggedPoints = []
   ) { }
 
   public setParallelogram(parallelogram) { this.parallelogramCanvas = parallelogram; }
@@ -100,6 +101,7 @@ export class Parallelogram {
 
     let D = new Point(x, y);
     this.points.push(D);
+    this.clonePoints();
   };
 
   /**
@@ -209,7 +211,7 @@ export class Parallelogram {
    * @return [point]
    */
   public getCenterOfMass() {
-    this.setCenterOfMass()
+    this.setCenterOfMass();
     return this.massCenter;
   }
 
@@ -260,6 +262,16 @@ export class Parallelogram {
     }
   }
 
-  public setCanvasParallelogram(canvas: object) {}
+  public clonePoints() {
+    return this.draggedPoints = this.points;
+  }
+
+  public getDraggedPoints() {
+    return this.draggedPoints;
+  }
+
+  public updatePointPosition(point: Point, index: number) {
+    this.draggedPoints[index] = point;
+  }
 
 }

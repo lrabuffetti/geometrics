@@ -45,7 +45,6 @@ export class DrawAreaComponent implements OnInit {
     if (this.coordinates.length() < 3) {
       document.onclick = function(e) {
         let point = new Point(e.pageX, e.pageY);
-        console.log(e.pageX, e.pageY)
         that.coordinates.setPoint(point);
         that.setCanvasPoint(e);
       }
@@ -125,12 +124,12 @@ export class DrawAreaComponent implements OnInit {
     return index;
   }
 
-  public onStart(event, index) {
-
-  }
-
   public onStop(event, index) {
-    console.log('stopped output:', event, index);
+    let dragPosition = document.querySelector('#point-' + index).getBoundingClientRect(),
+      newPoint = new Point(dragPosition.left, dragPosition.top);
+    this.ctx.clearRect(0, 0, 1000, 1000);
+    this.circle.clearRect(0, 0, 1000, 1000);
+    this.coordinates.updatePointPosition(newPoint, index);
   }
 
   public setCanvasPoint(e: any) {
@@ -141,8 +140,8 @@ export class DrawAreaComponent implements OnInit {
     this.ctx.stroke();
   }
 
-  public setLastCanvasPoint() {
-    let points = this.coordinates.getPoints()
+  private setLastCanvasPoint() {
+    let points = this.coordinates.getDraggedPoints()
     this.ctx.beginPath();
     this.ctx.arc((points[3].x - this.canvas.nativeElement.offsetLeft), points[3].y, 5, 0, 2 * Math.PI);
     this.circle.fillStyle = '#FF0000';
@@ -152,7 +151,7 @@ export class DrawAreaComponent implements OnInit {
 
   public drawCanvasLines() {
 
-    let points = this.coordinates.getPoints();
+    let points = this.coordinates.getDraggedPoints();
 
     this.ctx.beginPath();
 

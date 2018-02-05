@@ -7,8 +7,6 @@
 <div id="draw-board" class="draw-area" (click)="getPosition($event)">
   <app-point
     ngDraggable
-    draggable="true"
-    (started)="onStart($event, i)"
     (stopped)="onStop($event, i)"
     id="point-{{i}}"
     class="some-point"
