@@ -6,8 +6,7 @@
   id="draw-board"
   class="draw-area"
   (click)="getPosition($event)"
-  myDropTarget
-  (myDrop)="onDrop($event)">
+  myDropTarget>
   <app-point
     [ngDraggable]="draggable"
     [preventDefaultEvent]="preventDefaultEvent"
