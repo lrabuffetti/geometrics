@@ -2,7 +2,12 @@
   <h1 class="pull-left">Draw Board</h1>
   <button type="button" class="btn btn-primary pull-right mt-25" (click)="resetPoints($event)" name="button">Reset</button>
 </div>
-<div id="draw-board" class="draw-area" (click)="getPosition($event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+<div
+  id="draw-board"
+  class="draw-area"
+  (click)="getPosition($event)"
+  myDropTarget
+  (myDrop)="onDrop($event)">
   <app-point
     [ngDraggable]="draggable"
     [preventDefaultEvent]="preventDefaultEvent"

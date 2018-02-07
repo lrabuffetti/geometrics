@@ -14,6 +14,10 @@ import { AboutMeComponent } from './components/about-me/about-me.component';
 
 import { AngularDraggableModule } from 'angular2-draggable';
 
+import { DraggableDirective } from './directives/draggable.directive';
+import { DropTargetDirective } from './directives/drop-target.directive';
+import { DragService } from './directives/drag.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +27,8 @@ import { AngularDraggableModule } from 'angular2-draggable';
     ParallelogramComponent,
     CircleComponent,
     AboutMeComponent,
+    DraggableDirective,
+    DropTargetDirective
   ],
   imports: [
     BrowserModule,
@@ -30,7 +36,7 @@ import { AngularDraggableModule } from 'angular2-draggable';
     BrowserAnimationsModule,
     AngularDraggableModule,
   ],
-  providers: [],
+  providers: [DragService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
