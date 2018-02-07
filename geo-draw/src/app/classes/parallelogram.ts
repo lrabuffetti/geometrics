@@ -63,6 +63,7 @@ export class Parallelogram {
   public deletePoints() {
     this.lines = [];
     this.points = [];
+    this.draggedPoints = [];
     this.massCenter = new Point(0,0);
   };
 

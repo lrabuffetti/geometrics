@@ -1,0 +1,66 @@
+<div class="col-md-12">
+  <div class="col-md-8">
+    <h4>Resume of me</h4>
+    <p>
+      Hello, my name is <strong>Lucas</strong>, I am from Argentina, I born in a small Town called Paraná, it's on Entre Ríos Providence. A beautiful place on the river side where I grown up.
+    </p>
+    <p>
+      I like to do a lot of things, I play basquetball as a point guard, also I play guitar, I love the blues, jazz and music from Argentina. But also I love Radiohead, Pink Floyd and another international artists.
+    </p>
+    <p>
+      I use to spend most of my time with my friends doing the things I like, and having good times =), I really like to joke and being funny it's the best way to past the time, so, you once you know, you will know that I can take thing really seriously but
+      also, with fun and kindness.
+    </p>
+    <h4>Professional Career</h4>
+    <p>
+      I studied system engeneering and I am a developer, at the begining, I start working on <strong>C</strong> and <strong>C++</strong> then with the necessities of the company I start to work with <strong>PHP</strong> and with that, the frontend appears.
+      Now there are more than 7 years that I am working with <strong>HTML/CSS/JS</strong>, but also I do <strong>DevOps</strong> too, because I like to know what we have "under the hood".
+    </p>
+    <p>
+      Currently I am working on <strong>McAfee</strong> as a Sr frontend and DevOps =) and I have several tasks on both sides, one of the technologies I love the most is <strong>Angular</strong>, since the first version that I am using the framework and
+      I found it really cool. So my contribution as a Frontend, I am making global components to uso along all the applications. And, as a DevOps I am in charge of all the cloud configurations, team city agents, environment and deployments.
+    </p>
+  </div>
+  <div class="col-md-4">
+    <img class="img-responsive img-thumbnail" src="../../assets/profile.jpg" alt="profile picture">
+  </div>
+  <div class="col-md-6">
+    <h4>Resume of Project</h4>
+    <p>
+      First of all, I want to thank you for the time and the patience, during this month thing get complicated on my job and I did not have much time to complete the task the way I want.
+    </p>
+    <p>
+      You can see and follow the code in this <a href="https://github.com/lrabuffetti/geometrics" target="_blank">Github Repo</a>, and you will find that I build the APP with <strong>ANGULAR</strong>, using TypeScript, and you may ask: <i>"why he didn't use a simple library to save time and get things faster?"</i>.
+    </p>
+    <p>
+      Ok, here is the explanation, I just want to show that I can programm with different approaches, using a framework to manage the MVC pattern and the best practices of it, and also, using TypeScript gives me the best abstraction at the moment of resolve
+      algorithims and math solutions to this task. Also, there is a Canvas approach so you can see that I can manage that too.
+    </p>
+    <p>
+      You will find classes, controllers, routing, dependencies injections, third party libraries, and <strong>funny comments along the code</strong> , because, coding needs to be fun. Otherwise you will get bored and the monotony on the job is something
+      that no one wants.
+    </p>
+    <p>
+      Hope everything goes well and see you soon there to work together, share the best of us and grow as a persons and professionals.
+    </p>
+  </div>
+  <div class="col-md-6">
+    <h4>Job Experience</h4>
+    <ul>
+      <li *ngFor="let job of jobs; let i = index">
+        <div class="">
+          <span>Job title:</span> <strong>{{job.title}}</strong>
+        </div>
+        <div class="">
+          <span>Job position:</span> <strong>{{job.position}}</strong>
+        </div>
+        <div class="">
+          <span>Projects:</span> <strong>{{job.project}}</strong>
+        </div>
+        <div class="">
+          <span>Start/End:</span> <strong>{{job.start}} {{job.end}}</strong>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

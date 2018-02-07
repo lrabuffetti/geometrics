@@ -1,12 +1,11 @@
-<div class="col-md-12 mt-2 clearfix">
-  <h1 class="float-left">
-    draw area
-  </h1>
-  <button type="button" class="btn btn-primary float-right" (click)="resetPoints($event)" name="button">Reset</button>
+<div class="clearfix">
+  <h1 class="pull-left">Draw Board</h1>
+  <button type="button" class="btn btn-primary pull-right mt-25" (click)="resetPoints($event)" name="button">Reset</button>
 </div>
-<div id="draw-board" class="draw-area" (click)="getPosition($event)">
+<div id="draw-board" class="draw-area" (click)="getPosition($event)" ondrop="drop(event)" ondragover="allowDrop(event)">
   <app-point
-    ngDraggable
+    [ngDraggable]="draggable"
+    [preventDefaultEvent]="preventDefaultEvent"
     (stopped)="onStop($event, i)"
     id="point-{{i}}"
     class="some-point"
@@ -17,5 +16,5 @@
     (update)="newCoordinate($event)">
   </app-point>
 </div>
-<canvas #parallelogram id="canvas" class="mt-3" width="{{cWidht}}" height="{{cHeight}}" style="border: 1px solid black; border-radius: 5px" (click)="preventClick($event)"></canvas>
+<canvas #parallelogram id="canvas" class="mt-3" width="{{cWidht}}" height="{{cHeight}}" (click)="preventClick($event)"></canvas>
 <canvas #circle *ngIf="coordinates.length() === -1" id="canvas2" class="mt-3" width="{{cWidht}}" height="{{cHeight}}" style="border: 1px solid black; border-radius: 5px" (click)="preventClick($event)"></canvas>

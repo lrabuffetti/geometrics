@@ -10,10 +10,9 @@ import { PointComponent } from './components/point/point.component';
 import { LineComponent } from './components/line/line.component';
 import { ParallelogramComponent } from './components/parallelogram/parallelogram.component';
 import { CircleComponent } from './components/circle/circle.component';
+import { AboutMeComponent } from './components/about-me/about-me.component';
 
-import { NgvasModule } from "ngvas";
 import { AngularDraggableModule } from 'angular2-draggable';
-
 
 @NgModule({
   declarations: [
@@ -22,14 +21,14 @@ import { AngularDraggableModule } from 'angular2-draggable';
     PointComponent,
     LineComponent,
     ParallelogramComponent,
-    CircleComponent
+    CircleComponent,
+    AboutMeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgvasModule,
     BrowserAnimationsModule,
-    AngularDraggableModule
+    AngularDraggableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

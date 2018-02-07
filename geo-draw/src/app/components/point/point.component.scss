@@ -2,8 +2,9 @@
   border: 1px solid;
   width: 11px;
   height: 11px;
-  background-color: red;
+  background-color: #FF0000;
   position: relative;
+  border-radius: 50%;
 }
 
 .line:nth-child(2)[data-index='3'],

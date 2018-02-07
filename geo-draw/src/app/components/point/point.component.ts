@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, ChangeDetectorRef } from '@angular/core';
 import * as _ from 'lodash';
 import { Parallelogram } from '../../classes/parallelogram'
 import { Point } from '../../classes/point'
@@ -15,7 +15,7 @@ export class PointComponent implements OnInit {
   @Output('update') newCoordinate = new EventEmitter<any>();
   @Input() indexPoint: any;
 
-  constructor() { }
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     //delete repeated lines
@@ -38,5 +38,4 @@ export class PointComponent implements OnInit {
       this.lines.push(this.coordinates.drawLine(points[2], points[3]));
     }
   }
-
 }
